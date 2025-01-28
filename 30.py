@@ -66,7 +66,7 @@ def add_question(conn, question, answer):
         )
         conn.commit()
 
-st.title("30-Second Trivia Game")
+st.title("30-Second Game")
 
 if "game_started" not in st.session_state:
     st.session_state.game_started = False
