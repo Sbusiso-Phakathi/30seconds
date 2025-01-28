@@ -1,75 +1,3 @@
--- CREATE TABLE teams (
---     team_id SERIAL PRIMARY KEY,
---     team_name VARCHAR(100) NOT NULL,
---     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
--- );
-
--- drop table if exists teammates;
--- CREATE TABLE teammates (
---     teammate_id SERIAL PRIMARY KEY,
---     team_id INT REFERENCES teams(team_id) ON DELETE CASCADE,
---     member_name VARCHAR(100) NOT NULL,
---     score INT DEFAULT 0,  -- Individual score for the teammate
---     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
--- );
-
--- CREATE TABLE questions (
---     question_id SERIAL PRIMARY KEY,
---     question_text TEXT NOT NULL,
---     correct_answer TEXT NOT NULL
--- );
-
-
--- CREATE TABLE game_scores (
---     game_id SERIAL PRIMARY KEY,
---     team_id INT REFERENCES teams(team_id) ON DELETE CASCADE,
---     total_team_score INT DEFAULT 0,
---     played_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
--- );
-
--- INSERT INTO teams (team_name) VALUES ('Team A');
-
--- Assuming 'team_id' is 1 for 'Team A'
--- INSERT INTO teammates (team_id, member_name, score) VALUES (1, 'Alice', 0);
--- INSERT INTO teammates (team_id, member_name, score) VALUES (1, 'Bob', 0);
-
-
--- Update scores after a round
--- UPDATE teammates SET score = 3 WHERE team_id = 1 AND member_name = 'Alice';
--- UPDATE teammates SET score = 5 WHERE team_id = 1 AND member_name = 'Bob';
-
--- Calculate team score by summing individual scores of the team members
--- WITH team_scores AS (
---     SELECT team_id, SUM(score) AS total_team_score
---     FROM teammates
---     WHERE team_id = 1
---     GROUP BY team_id
--- )
--- INSERT INTO game_scores (team_id, total_team_score) 
--- SELECT team_id, total_team_score FROM team_scores WHERE team_id = 1;
-
-
--- SELECT m.member_name, m.score
--- FROM teammates m
--- JOIN teams t ON m.team_id = t.team_id
--- WHERE t.team_name = 'Team A'
--- ORDER BY m.score DESC;
-
-
--- SELECT t.team_name, gs.total_team_score
--- FROM game_scores gs
--- JOIN teams t ON gs.team_id = t.team_id
--- ORDER BY gs.total_team_score DESC;
-
--- ALTER TABLE teammates
--- ADD CONSTRAINT unique_team_member UNIQUE (team_id, member_name);
-
-
-
-drop table teams cascade;
-drop table teammates cascade;
-drop table questions cascade;
-drop table game_scores cascade;
 
 
 -- Create the teams table
@@ -142,6 +70,9 @@ FROM game_scores gs
 JOIN teams t ON gs.team_id = t.team_id
 ORDER BY gs.total_team_score DESC;
 
--- Alter teammates table to add a unique constraint on team-member pairs (already handled above)
--- ALTER TABLE teammates
--- ADD CONSTRAINT unique_team_member UNIQUE (team_id, member_name);
+Alter teammates table to add a unique constraint on team-member pairs (already handled above)
+ALTER TABLE teammates
+ADD CONSTRAINT unique_team_member UNIQUE (team_id, member_name);
+
+ALTER TABLE teams
+ADD team_score integer;
