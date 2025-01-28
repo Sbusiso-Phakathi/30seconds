@@ -14,3 +14,5 @@
 --     cardid SERIAL PRIMARY KEY,
 --     card TEXT[]
 -- );
+
+
