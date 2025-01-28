@@ -16,3 +16,16 @@
 -- );
 
 
+-- CREATE TABLE questions (
+--     id SERIAL PRIMARY KEY,
+--     question TEXT NOT NULL,
+--      answer TEXT NOT NULL
+--  );
+-- CREATE TABLE scores (
+--      id SERIAL PRIMARY KEY,
+--      team_name TEXT NOT NULL,
+--      score INTEGER NOT NULL,
+--     played_at TIMESTAMP NOT NULL
+--  );
+
+drop TABLE questions cascade
