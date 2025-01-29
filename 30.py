@@ -67,8 +67,14 @@ def add_question(conn, question, answer):
         )
         conn.commit()
 
-st.title("30-Second Game")
-
+st.markdown(
+            """
+            <div style="background-color: #d4edda; padding: 20px; border-radius: 10px; text-align: center; font-size: 24px; font-weight: bold;">
+                🎉 30-Second Game 🎉
+            </div>
+            """,
+            unsafe_allow_html=True
+        )    
 if "game_started" not in st.session_state:
     st.session_state.game_started = False
 if "questions" not in st.session_state:
@@ -179,7 +185,14 @@ if st.session_state.game_started:
       
 
     else:
-        st.write(f"Game Over! Your team score: {st.session_state.score}")
+        st.markdown(
+            """
+            <div style="background-color: #d4edda; padding: 20px; border-radius: 10px; text-align: center; font-size: 24px; font-weight: bold;">
+                🎉 Time's Up! 🎉
+            </div>
+            """,
+            unsafe_allow_html=True
+        )        
         conn = get_db_connection()
         save_score(conn, team_name, member_name, st.session_state.score)
 
