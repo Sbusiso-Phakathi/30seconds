@@ -6,10 +6,11 @@ import pandas as pd
 @st.cache_resource
 def get_db_connection():
     return psycopg2.connect(
-        host="localhost",
-        database="action",
-        user="postgres",
-        port=5430
+        host="129.232.211.166",
+        database="events",
+        user="dylan",
+        port=5432,
+        password="super123duper"
     )
 
 def fetch_questions(conn):
