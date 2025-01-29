@@ -108,13 +108,15 @@ if st.button("Start Game") and team_name and member_name:
         st.session_state.current_index = 0
         st.session_state.score = 0
         st.session_state.start_time = datetime.now()
-        st.session_state.remaining_time = 30  
-
+        st.session_state.remaining_time = 30 
+        
 if st.session_state.game_started:
     questions = st.session_state.questions
     current_index = st.session_state.current_index
 
+
     if current_index < len(questions):
+        
         question_id, question, answer = questions[current_index]
         
         end_time = st.session_state.start_time + timedelta(seconds=30)
@@ -127,37 +129,54 @@ if st.session_state.game_started:
             save_score(conn, team_name, member_name, st.session_state.score)
             st.session_state.game_started = False 
         else:
+            import time
             st.markdown(
-                f"""
-                <div style="background-color: #fffbcc; padding: 10px; border-radius: 10px; text-align: center; font-size: 20px;">
-                    Time Remaining: <b>{st.session_state.remaining_time} seconds</b>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
+                    f"""
+                    <div style="background-color: #f9f9f9; padding: 20px; border-radius: 10px;">
+                        <h4>{question}</h4>
+                    </div>
+                    """,
+                    unsafe_allow_html=True
+                )
 
-        st.markdown(
-            f"""
-            <div style="background-color: #f9f9f9; padding: 20px; border-radius: 10px;">
-                <h4>{question}</h4>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
+            user_answer = st.text_input("Your Answer:", key=f"answer_{current_index}")
 
-        user_answer = st.text_input("Your Answer:", key=f"answer_{current_index}")
+            if st.button("Submit Answer", key=f"submit_{current_index}"):
+                    if user_answer.lower() == answer.lower():
+                        st.session_state.score += 1
+                        conn = get_db_connection()
+                        save_score(conn, team_name, member_name, 1)  
+                        st.success("Correct answer!")
+                    else:
+                        st.error("Wrong answer!")
+                    
+                    st.session_state.current_index += 1
+                    st.session_state.start_time = datetime.now()  
 
-        if st.button("Submit Answer", key=f"submit_{current_index}"):
-            if user_answer.lower() == answer.lower():
-                st.session_state.score += 1
-                conn = get_db_connection()
-                save_score(conn, team_name, member_name, 1)  
-                st.success("Correct answer!")
-            else:
-                st.error("Wrong answer!")
-            
-            st.session_state.current_index += 1
-            st.session_state.start_time = datetime.now()  
+            # Initialize session state
+            if "remaining_time" not in st.session_state:
+                st.session_state.remaining_time = 30  # Set initial countdown time
+
+            # Create a placeholder for dynamic updates
+            placeholder = st.empty()
+
+            # Countdown logic
+            for seconds in range(st.session_state.remaining_time, -1, -1):
+                with placeholder:
+                    st.markdown(
+                        f"""
+                        <div style="background-color: #fffbcc; padding: 10px; border-radius: 10px; text-align: center; font-size: 20px;">
+                            Time Remaining: <b>{seconds} seconds</b>
+                        </div>
+                        """,
+                        unsafe_allow_html=True
+                    )
+                time.sleep(1)  # Pause for 1 second
+
+            st.success("Time's up! 🎉")
+
+
+      
 
     else:
         st.write(f"Game Over! Your team score: {st.session_state.score}")
