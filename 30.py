@@ -12,6 +12,7 @@ def get_db_connection():
         port=5432,
         password="super123duper"
     )
+     
 
 def fetch_questions(conn):
     with conn.cursor() as cur:
