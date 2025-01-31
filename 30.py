@@ -214,11 +214,11 @@ import random
 @st.cache_resource
 def get_db_connection():
     return psycopg2.connect(
-        host="129.232.211.166",
-        database="events",
-        user="dylan",
-        port=5432,
-        password="super123duper"
+        host="",
+        database="",
+        user="",
+        port=,
+        password=""
     )
 
 def fetch_questions(conn):
