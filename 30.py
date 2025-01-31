@@ -9,10 +9,10 @@
 # def get_db_connection():
 #     conn = pyodbc.connect(
 #         "Driver={ODBC Driver 17 for SQL Server};"
-#         "Server=129.232.211.166;"  # Replace with your MSSQL server address
-#         "Database=events;"          # Replace with your database name
-#         "UID=dylan;"               # Replace with your username
-#         "PWD=super123duper"        # Replace with your password
+#         "Server=;"  # Replace with your MSSQL server address
+#         "Database=;"          # Replace with your database name
+#         "UID=;"               # Replace with your username
+#         "PWD="        # Replace with your password
 #     )
 #     return conn
 
